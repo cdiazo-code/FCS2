@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Síntesis académica de un sistema web-móvil de apoyo a la práctica del habla en adultos mayores.">
+  <meta name="theme-color" content="#fffefc">
+  <title>Practicar el habla con tecnología | Síntesis científica</title>
+
+  <!-- NO TOCAR DESDE AQUÍ: estilos y comportamiento del sitio -->
+  <style>
+    :root {
+      --forest: #0f3e17;
+      --forest-shadow: #0c2f10;
+      --sage: #b1dbb8;
+      --keylime: #e1f4df;
+      --mint: #cfe7d3;
+      --slate: #b6ced5;
+      --cream: #fffefc;
+      --charcoal: #222222;
+      --border: #efeeeb;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --page-width: 1200px;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+    a { color: var(--forest); text-underline-offset: 4px; }
+    a:hover { color: var(--forest-shadow); }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--forest);
+      outline-offset: 4px;
+    }
+    .skip-link {
+      position: absolute; left: 12px; top: -60px; z-index: 20;
+      padding: 12px 16px; background: var(--forest); color: var(--cream);
+      border-radius: 8px;
+    }
+    .skip-link:focus { top: 12px; color: var(--cream); }
+    .container { width: min(var(--page-width), calc(100% - 40px)); margin-inline: auto; }
+    .site-header { background: var(--cream); border-bottom: 1px solid var(--border); }
+    .nav-wrap {
+      min-height: 76px; display: flex; align-items: center;
+      justify-content: space-between; gap: 20px; position: relative;
+    }
+    .brand {
+      color: var(--forest); font-family: var(--serif); font-size: 25px;
+      font-weight: 400; text-decoration: none; line-height: 1.1;
+    }
+    .brand small {
+      display: block; margin-top: 5px; color: var(--charcoal);
+      font: 600 16px/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+    }
+    .menu-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 48px; min-height: 48px; padding: 8px 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--forest); background: var(--cream); font: 600 15px var(--sans);
+      cursor: pointer;
+    }
+    .site-nav {
+      display: none; position: absolute; z-index: 10; top: calc(100% - 4px);
+      left: 0; right: 0; padding: 14px; background: var(--cream);
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .site-nav.is-open { display: grid; gap: 4px; }
+    .site-nav a {
+      display: block; padding: 10px 12px; border-radius: 7px;
+      color: var(--charcoal); text-decoration: none; font-size: 16px;
+    }
+    .site-nav a:hover { background: var(--keylime); color: var(--forest); }
+    .hero { padding: 34px 0 58px; }
+    .hero-grid { display: grid; gap: 18px; }
+    .hero-copy {
+      padding: 32px 25px; background: var(--keylime); border-radius: var(--radius);
+    }
+    .eyebrow {
+      margin: 0 0 14px; color: var(--forest); font-size: 16px;
+      font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    h1, h2, h3, .serif {
+      color: var(--forest); font-family: var(--serif); font-weight: 400;
+      line-height: 1.16; letter-spacing: -.02em;
+    }
+    h1 { max-width: 780px; margin: 0 0 20px; font-size: clamp(42px, 9vw, 74px); }
+    h2 { margin: 0 0 18px; font-size: clamp(34px, 6vw, 52px); }
+    h3 { margin: 0 0 10px; font-size: 28px; }
+    p { margin: 0 0 16px; }
+    .hero-lede { max-width: 690px; font-size: 19px; line-height: 1.55; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .pill {
+      display: inline-flex; align-items: center; padding: 8px 14px;
+      border-radius: 999px; background: var(--cream); color: var(--forest);
+      font-size: 16px; font-weight: 600;
+    }
+    .hero-visual {
+      padding: 24px; background: var(--slate); border-radius: var(--radius);
+      display: grid; align-content: center; gap: 12px;
+    }
+    .preview-card {
+      padding: 18px; border-radius: var(--radius); background: var(--cream);
+    }
+    .preview-card strong { display: block; color: var(--forest); font-size: 16px; }
+    .preview-card span { display: block; font-size: 16px; line-height: 1.45; }
+    .preview-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .dots { display: flex; gap: 5px; }
+    .dots i { width: 8px; height: 8px; display: block; border-radius: 50%; background: var(--sage); }
+    .section { padding: 66px 0; }
+    .section-tint { background: var(--mint); }
+    .section-keylime { background: var(--keylime); }
+    .section-sage { background: var(--sage); }
+    .section-intro { max-width: 760px; margin-bottom: 30px; }
+    .section-intro p { font-size: 18px; }
+    .two-col { display: grid; gap: 20px; }
+    .card {
+      padding: 26px 22px; background: var(--cream); border-radius: var(--radius);
+    }
+    .card.sage { background: var(--sage); }
+    .card.keylime { background: var(--keylime); }
+    .card.slate { background: var(--slate); }
+    .card p:last-child { margin-bottom: 0; }
+    .small-label {
+      display: block; margin-bottom: 10px; color: var(--forest);
+      font-size: 16px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .steps { display: grid; gap: 12px; counter-reset: step; }
+    .step {
+      position: relative; min-height: 100%; padding: 22px 20px 22px 66px;
+      background: var(--cream); border-radius: var(--radius); counter-increment: step;
+    }
+    .step::before {
+      content: counter(step, decimal-leading-zero); position: absolute; left: 20px; top: 22px;
+      color: var(--forest); font: 400 22px var(--serif);
+    }
+    .step h3 { font-size: 24px; }
+    .metric-grid { display: grid; gap: 14px; margin: 28px 0; }
+    .metric {
+      padding: 24px 22px; background: var(--cream); border-radius: var(--radius);
+    }
+    .metric-value {
+      display: block; color: var(--forest); font: 400 clamp(38px, 7vw, 58px)/1.05 var(--serif);
+      letter-spacing: -.03em;
+    }
+    .metric-label { display: block; margin-top: 8px; font-size: 16px; }
+    .bar-chart { display: grid; gap: 18px; margin-top: 20px; }
+    .bar-row { display: grid; gap: 7px; }
+    .bar-heading { display: flex; justify-content: space-between; gap: 14px; font-size: 16px; }
+    .bar-track { height: 14px; background: var(--cream); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--forest); border-radius: 999px; }
+    .note {
+      margin-top: 20px; padding: 18px 20px; border-left: 4px solid var(--forest);
+      background: rgba(255,254,252,.72); border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .limits-list { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+    .limits-list li { padding: 18px 20px; background: var(--cream); border-radius: var(--radius); }
+    .limits-list strong { color: var(--forest); }
+    .conclusion-panel { padding: 30px 24px; background: var(--keylime); border-radius: var(--radius); }
+    .reference {
+      padding: 26px 22px; background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow-wrap: anywhere;
+    }
+    .reference p { font-size: 16px; }
+    .site-footer { padding: 30px 0; background: var(--cream); border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
+    .muted { color: #444; }
+    .back-top { display: inline-block; margin-top: 18px; font-weight: 600; }
+    @media (min-width: 760px) {
+      .menu-toggle { display: none; }
+      .site-nav {
+        display: flex; position: static; padding: 0; border: 0; gap: 4px;
+        background: transparent; align-items: center;
+      }
+      .site-nav a { padding: 10px 11px; font-size: 16px; }
+      .hero { padding: 54px 0 78px; }
+      .hero-grid { grid-template-columns: 1.15fr .85fr; align-items: stretch; }
+      .hero-copy { padding: 48px 42px; }
+      .hero-visual { padding: 28px; }
+      .section { padding: 86px 0; }
+      .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+      .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .card { padding: 32px; }
+      .conclusion-panel { padding: 42px; }
+      .footer-inner { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+    @media (min-width: 1050px) {
+      .site-nav { gap: 10px; }
+      .site-nav a { padding-inline: 12px; }
+      .steps { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .step { padding: 56px 18px 20px; }
+      .step::before { top: 18px; left: 18px; }
+      .step h3 { font-size: 21px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- EDITAR AQUÍ: textos, datos, navegación y enlaces del sitio -->
+  <header class="site-header" id="inicio">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Practicar el habla con tecnología, inicio">
+        Habla y tecnología
+        <small>Síntesis de investigación</small>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menú
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+        <a href="#contexto">Contexto</a>
+        <a href="#solucion">Solución</a>
+        <a href="#resultados">Resultados</a>
+        <a href="#limitaciones">Limitaciones</a>
+        <a href="#conclusiones">Conclusiones</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Tecnología asistiva · Adultos mayores</p>
+          <h1>Practicar el habla con tecnología</h1>
+          <p class="hero-lede">
+            Un sistema de apoyo que combina reconocimiento automático del habla,
+            retroalimentación inmediata y seguimiento de ejercicios en una solución web–móvil accesible.
+          </p>
+          <p>
+            Esta página resume una propuesta de ingeniería orientada a acompañar
+            la práctica guiada de la pronunciación en adultos mayores, con apoyo de cuidadores.
+          </p>
+          <div class="hero-meta">
+            <span class="pill">Reconocimiento de voz</span>
+            <span class="pill">Retroalimentación</span>
+            <span class="pill">Seguimiento</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Esquema conceptual de la experiencia del sistema">
+          <div class="preview-card">
+            <div class="preview-top">
+              <strong>01 · Practicar</strong>
+              <span class="pill">Móvil</span>
+            </div>
+            <span>La persona realiza un ejercicio de pronunciación guiado.</span>
+          </div>
+          <div class="preview-card">
+            <div class="preview-top">
+              <strong>02 · Recibir respuesta</strong>
+              <span class="pill">Voz + visual</span>
+            </div>
+            <span>El sistema reconoce el audio y ofrece retroalimentación inmediata.</span>
+          </div>
+          <div class="preview-card">
+            <div class="preview-top">
+              <strong>03 · Acompañar</strong>
+              <span class="pill">Web</span>
+            </div>
+            <span>El cuidador configura ejercicios y consulta el progreso.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="contexto">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">01 · Contexto científico</p>
+          <h2>Una necesidad de práctica accesible y acompañada</h2>
+          <p>
+            El envejecimiento puede asociarse con cambios en la fluidez verbal,
+            la articulación y el ritmo del habla, incluso en personas sin patologías
+            neurodegenerativas. Las prácticas tradicionales o las herramientas aisladas
+            pueden ofrecer poca personalización, retroalimentación tardía y escaso seguimiento.
+          </p>
+        </div>
+        <div class="two-col">
+          <article class="card">
+            <span class="small-label">Problema identificado</span>
+            <h3>Continuidad y orientación</h3>
+            <p>
+              La práctica puede verse dificultada por interfaces complejas, falta de
+              respuesta oportuna y poca integración entre los ejercicios de la persona
+              mayor y el acompañamiento del cuidador.
+            </p>
+          </article>
+          <article class="card keylime">
+            <span class="small-label">Objetivo del estudio</span>
+            <h3>Integrar componentes en un flujo común</h3>
+            <p>
+              Desarrollar y evaluar un sistema de apoyo a la práctica del habla que
+              articule reconocimiento automático, evaluación determinista, retroalimentación
+              multimodal, accesibilidad y supervisión del cuidador.
+            </p>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Alcance:</strong> el trabajo se centra en la viabilidad técnica y la
+          evaluación exploratoria de usabilidad de un prototipo; no plantea demostrar
+          eficacia clínica ni sustituir la atención profesional.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-keylime" id="solucion">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">02 · La solución</p>
+          <h2>Una arquitectura híbrida web–móvil</h2>
+          <p>
+            La aplicación móvil acompaña los ejercicios de pronunciación. La plataforma
+            web permite al cuidador configurar secuencias, niveles de dificultad y límites
+            de repetición, además de supervisar el progreso.
+          </p>
+        </div>
+        <div class="two-col">
+          <article class="card sage">
+            <span class="small-label">Aplicación móvil</span>
+            <h3>Para la persona mayor</h3>
+            <p>
+              Presenta ejercicios guiados, captura la voz y entrega respuestas visuales
+              y auditivas para orientar la interacción.
+            </p>
+          </article>
+          <article class="card slate">
+            <span class="small-label">Plataforma web</span>
+            <h3>Para el cuidador</h3>
+            <p>
+              Facilita la configuración de ejercicios, parámetros de práctica y
+              seguimiento de eventos y resultados de interacción.
+            </p>
+          </article>
+        </div>
+
+        <div style="margin-top:32px">
+          <p class="eyebrow">Flujo de procesamiento</p>
+          <h3 class="serif" style="font-size:32px">Seis etapas conectadas</h3>
+          <div class="steps">
+            <article class="step">
+              <h3>Captura de audio</h3>
+              <p>La persona pronuncia la palabra o frase solicitada.</p>
+            </article>
+            <article class="step">
+              <h3>Reconocimiento ASR</h3>
+              <p>El audio se procesa mediante Google Speech-to-Text, configurado para español de Ecuador.</p>
+            </article>
+            <article class="step">
+              <h3>Comparación textual</h3>
+              <p>Se compara el texto reconocido con la referencia del ejercicio.</p>
+            </article>
+            <article class="step">
+              <h3>Reglas de decisión</h3>
+              <p>Una regla determinista clasifica la coincidencia como correcta o incorrecta.</p>
+            </article>
+            <article class="step">
+              <h3>Retroalimentación</h3>
+              <p>Se entrega una respuesta visual y auditiva para orientar el siguiente paso.</p>
+            </article>
+            <article class="step">
+              <h3>Progresión</h3>
+              <p>El sistema avanza o propone repetir, según la configuración del cuidador.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:24px">
+          <span class="small-label">Detalle metodológico importante</span>
+          <h3>La evaluación es una comparación exacta</h3>
+          <p>
+            El texto reconocido y el texto de referencia se normalizan a minúsculas
+            y se eliminan los espacios iniciales y finales. Después se realiza una
+            comparación textual exacta. El flujo no aplica interpretación semántica,
+            puntuación probabilística ni coincidencia aproximada (*fuzzy matching*).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-sage" id="resultados">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">03 · Resultados reportados</p>
+          <h2>Indicadores preliminares del prototipo</h2>
+          <p>
+            La evaluación técnica se realizó en condiciones controladas, con conectividad
+            inalámbrica estable y 50 intentos de pronunciación. La evaluación de usabilidad
+            combinó observación cualitativa y cuestionarios a cuidadores.
+          </p>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric">
+            <span class="metric-value">90 %</span>
+            <span class="metric-label">Reconocimiento correcto: 45 de 50 intentos</span>
+          </article>
+          <article class="metric">
+            <span class="metric-value">1,82 s</span>
+            <span class="metric-label">Latencia media de respuesta (DE = 0,41)</span>
+          </article>
+          <article class="metric">
+            <span class="metric-value">86,00</span>
+            <span class="metric-label">Puntuación media SUS, n = 5 cuidadores</span>
+          </article>
+        </div>
+
+        <div class="two-col">
+          <article class="card">
+            <span class="small-label">Distribución de latencia</span>
+            <h3>Tiempo medio por etapa</h3>
+            <div class="bar-chart" role="img" aria-label="Latencia media: captura y transmisión 0,38 segundos; reconocimiento en la nube 0,97 segundos; decisión y retroalimentación 0,47 segundos.">
+              <div class="bar-row">
+                <div class="bar-heading"><span>Captura y transmisión</span><strong>0,38 s</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width:39.2%"></div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-heading"><span>ASR en la nube</span><strong>0,97 s</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-heading"><span>Decisión y retroalimentación</span><strong>0,47 s</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width:48.5%"></div></div>
+              </div>
+            </div>
+            <p class="muted" style="margin-top:14px;font-size:16px">Valores medios reportados para las etapas del flujo.</p>
+          </article>
+          <article class="card keylime">
+            <span class="small-label">Usabilidad y observación</span>
+            <h3>Percepción favorable, con ajustes pendientes</h3>
+            <p>
+              La puntuación SUS media de 86,00 (DE = 2,85) se ubicó en el rango
+              “excelente” según la interpretación utilizada por el estudio.
+            </p>
+            <p>
+              En las sesiones de Thinking Aloud se observaron dificultades iniciales
+              de navegación y legibilidad, además de pausas durante la pronunciación.
+              Se valoraron positivamente la claridad, la respuesta por voz y la sencillez.
+            </p>
+          </article>
+        </div>
+        <div class="note">
+          <strong>Cómo interpretar estas cifras:</strong> el 90 % corresponde al reconocimiento
+          de palabras objetivo en una prueba de 50 intentos, no a una medida clínica de
+          mejora del habla. El SUS se aplicó a cinco cuidadores, no a una muestra amplia.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="limitaciones">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">04 · Limitaciones</p>
+          <h2>Resultados que deben leerse con cautela</h2>
+          <p>
+            El artículo presenta una evaluación inicial del prototipo. Sus resultados
+            son útiles para caracterizar el funcionamiento en el escenario probado,
+            pero no permiten generalizaciones amplias.
+          </p>
+        </div>
+        <ul class="limits-list">
+          <li><strong>Muestra exploratoria:</strong> el número de participantes y de intentos es reducido; no permite inferir eficacia clínica ni generalizar los resultados.</li>
+          <li><strong>Condiciones controladas:</strong> las 50 pruebas se realizaron con conectividad estable y sin introducir ruido de fondo artificial; no constituyen un benchmark amplio de redes o entornos.</li>
+          <li><strong>Variabilidad del habla:</strong> el reconocimiento puede verse afectado por acento, articulación, pausas prolongadas e intensidad vocal.</li>
+          <li><strong>Usabilidad:</strong> la evaluación SUS incluyó cinco cuidadores y las sesiones fueron supervisadas; esto puede influir en las percepciones registradas.</li>
+          <li><strong>Interfaz:</strong> se identificaron oportunidades para mejorar navegación inicial y legibilidad.</li>
+          <li><strong>Trabajo futuro:</strong> se requieren estudios longitudinales con muestras mayores y métricas objetivas del habla.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-keylime" id="conclusiones">
+      <div class="container">
+        <div class="conclusion-panel">
+          <p class="eyebrow">05 · Conclusiones</p>
+          <h2>La contribución está en la integración reproducible</h2>
+          <p>
+            El estudio muestra la viabilidad técnica preliminar de coordinar reconocimiento
+            automático del habla, evaluación determinista, retroalimentación inmediata,
+            progresión de ejercicios y supervisión del cuidador en una arquitectura híbrida.
+          </p>
+          <p>
+            Su aporte principal no es crear un nuevo algoritmo de reconocimiento de voz,
+            sino integrar componentes existentes en un flujo estructurado y reproducible
+            para apoyar la práctica guiada del habla en adultos mayores.
+          </p>
+          <p>
+            La evidencia disponible respalda la factibilidad del prototipo y una percepción
+            favorable de usabilidad en el grupo evaluado. La efectividad clínica y los
+            beneficios sostenidos sobre las habilidades del habla requieren investigación adicional.
+          </p>
+        </div>
+        <div style="margin-top:28px" class="reference">
+          <span class="small-label">Artículo fuente</span>
+          <h3>Referencia bibliográfica</h3>
+          <p>
+            Llerena, L., Rodríguez, N., Vásquez, B., Castro, J. W., &amp; Herrera, A. (2026).
+            <em>Voice-Driven Support System for Speech Practice in Older Adults: An Accessible
+            Web–Mobile Approach.</em> Algorithms, 19, 469.
+          </p>
+          <p>
+            <a href="https://doi.org/10.3390/a19060469" target="_blank" rel="noopener noreferrer">
+              https://doi.org/10.3390/a19060469
+            </a>
+          </p>
+          <p class="muted">Publicado el 9 de junio de 2026. Acceso abierto.</p>
+        </div>
+        <a class="back-top" href="#inicio">Volver al inicio ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Recurso académico de divulgación científica.</span>
+      <span class="muted">Contenido basado en el artículo citado.</span>
+    </div>
+  </footer>
+  <!-- FIN DE EDITAR AQUÍ -->
+
+  <!-- NO TOCAR DESDE AQUÍ: comportamiento de navegación -->
+  <script>
+    (() => {
+      const toggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("#site-nav");
+
+      if (!toggle || !nav) return;
+
+      toggle.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        nav.classList.toggle("is-open", !isOpen);
+      });
+
+      nav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          toggle.setAttribute("aria-expanded", "false");
+          nav.classList.remove("is-open");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
